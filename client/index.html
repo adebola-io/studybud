@@ -2,7 +2,6 @@
 <html lang="en">
    <head>
       <meta charset="UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Quizo Html Template</title>
       <link rel="stylesheet" href="styles/base.css" />
@@ -10,56 +9,31 @@
    <body>
       <aside class="sidebar">
          <div class="logo">
-            <img src="assets/images/logo.png" alt="BeRifma" />
+            <img
+               src="https://templates.seekviral.com/trimba3/forms/InterestingQuiz/assets/images/logo.png"
+               alt="Logo Icon"
+            />
+            <div class="logo-text">Trimba <span>.</span></div>
          </div>
 
          <div class="progress">
             <span>0% complete</span>
-            <progress></progress>
+            <progress value="50" max="100"></progress>
          </div>
       </aside>
 
       <main class="content">
          <form>
-            <h2 class="question-pill">Question 1/3</h2>
-            <h1 class="question">
-               Over the Past Two (2) Weeks, how Often have You had little
-               interest or Pleasure in Doing things?
-            </h1>
-            <hr />
-            <ul class="options">
-               <li class="question-option">
-                  <span class="option-letter">A</span>
-                  <span>Access Therapists who Have Insurance</span>
-               </li>
-               <li class="question-option">
-                  <span class="option-letter">B</span>
-                  <span>Choose Your Therapist</span>
-               </li>
-               <li class="question-option">
-                  <span class="option-letter">D</span>
-                  <input
-                     type="radio"
-                     id="easier-therapy-access"
-                     value="C. Easier Therapy Access"
-                  />
-                  <label for="easier-therapy-access"
-                     >Easier Therapy Access</label
-                  >
-               </li>
-               <li class="question-option">
-                  <span class="option-letter">D</span>
-                  <input
-                     type="radio"
-                     id="therapy-meets"
-                     value="D. Therapy Meets"
-                  />
-                  <label for="therapy-meets">Therapy Meets</label>
-               </li>
-            </ul>
-            <hr />
-
-            <button type="submit">Continue</button>
+            <!-- Form content here. -->
+            <div class="form-content"></div>
+            <div class="button-container">
+               <button id="back-button" class="form-button" type="button">
+                  <span>Back</span>
+               </button>
+               <button id="continue-button" class="form-button" type="button">
+                  <span>Continue</span>
+               </button>
+            </div>
          </form>
       </main>
    </body>
