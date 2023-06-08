@@ -21,7 +21,6 @@ interface TextQuestion {
 
 interface RatingQuestion {
   type: "rating";
-  subtext: string;
 }
 
 interface SelectQuestion {
@@ -32,6 +31,7 @@ interface SelectQuestion {
 type Question =
   & {
     id: number;
+    subtext?: string;
   }
   & QuestionPrompt
   & (OptionalQuestion | TextQuestion | RatingQuestion | SelectQuestion);

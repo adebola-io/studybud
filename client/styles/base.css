@@ -4,76 +4,136 @@
 @import url(./animations.css);
 
 :root {
-   --primary-color: rgb(0, 144, 157);
-   --field-color: rgb(255, 255, 255);
-   --sidebar-width: 20vw;
-   /* --left-margin: 15vw; */
+    --primary-color: rgb(0, 144, 157);
+    --field-color: rgb(255, 255, 255);
+    --sidebar-width: 20vw;
+    background-color: #eef3f7;
+    background-image: url(https://templates.seekviral.com/trimba3/forms/InterestingQuiz/assets/images/bg.jpg);
+    background-size: cover;
+    min-height: 100vh;
 }
 
 body {
-   margin: 0;
-   font-family: "Jost", "sans-serif";
-   background-color: #eef3f7;
+    margin: 0;
+    font-family: "Jost", "sans-serif";
+}
+
+.user-alert-container {
+    position: fixed;
+    z-index: 1;
+}
+.user-alert {
+    width: max-content;
+    padding: 20px 15px;
+    border-radius: 10px;
+    transition-duration: 500ms;
+    animation: alert-drop-in 300ms;
+}
+@media (max-width: 768px) {
+    .user-alert-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding-top: 30px;
+    }
+}
+.user-alert.error {
+    background-color: #ffd5dc;
+    color: #9b0000;
 }
 
 .content {
-   margin-left: var(--sidebar-width);
-   overflow-x: hidden;
+    margin-left: var(--sidebar-width);
+    overflow-x: hidden;
+}
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+    }
 }
 
 form {
-   padding-left: 20vw;
+    padding-left: 20vw;
+}
+@media (max-width: 768px) {
+    form {
+        padding-left: 0;
+    }
 }
 
 .form-content {
-   width: max-content;
-   display: flex;
+    width: max-content;
+    display: flex;
+}
+@media (max-width: 768px) {
+    .form-content {
+        width: 100vw;
+    }
 }
 
 /* Buutons */
 .button-container {
-   display: flex;
-   justify-content: space-between;
-   padding-right: 20vw;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 20vw;
+}
+@media (max-width: 768px) {
+    .button-container {
+        padding-top: 30px;
+        padding-right: 0;
+        justify-content: center;
+        gap: 90px;
+    }
 }
 .button-container > button {
-   position: relative;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   border-radius: 4px;
-   background-color: black;
-   margin-top: 50px;
-   padding: 0 40px;
-   height: 66px;
-   font-size: 20px;
-   color: rgb(236, 227, 227);
-   font-weight: bold;
-   overflow: hidden;
-   cursor: pointer;
-   transition-duration: 300ms;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background-color: black;
+    margin-top: 50px;
+    padding: 0 40px;
+    height: 66px;
+    font-size: 20px;
+    color: rgb(236, 227, 227);
+    font-weight: bold;
+    overflow: hidden;
+    cursor: pointer;
+    transition-duration: 300ms;
+}
+@media (max-width: 768px) {
+    .button-container > button {
+        margin-top: 0;
+        margin-bottom: 50px;
+    }
 }
 .button-container > button > span {
-   position: relative;
+    position: relative;
 }
 .button-container > button::before {
-   position: absolute;
-   content: "";
-   display: block;
-   width: 100%;
-   height: 100%;
-   transform: translateY(100%);
-   background-color: var(--primary-color);
-   transition-duration: 200ms;
+    position: absolute;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: translateY(100%);
+    background-color: var(--primary-color);
+    transition-duration: 200ms;
 }
 .button-container > button:hover {
-   transition: 0.4s;
-   border: solid 2px var(--primary-color);
+    transition: 0.4s;
+    border: solid 2px var(--primary-color);
 }
 .button-container > button:hover::before {
-   transform: none;
+    transform: none;
 }
 /* Hide back button initally. */
 .button-container > button:nth-child(1) {
-   display: none;
+    display: none;
+}
+
+hidden-icon {
+    display: none;
 }
