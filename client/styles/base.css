@@ -4,7 +4,6 @@
 @import url(./animations.css);
 
 :root {
-    --primary-color: rgb(0, 144, 157);
     --field-color: rgb(255, 255, 255);
     --sidebar-width: 20vw;
     background-color: #eef3f7;

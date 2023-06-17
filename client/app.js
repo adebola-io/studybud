@@ -1,5 +1,5 @@
-import { optColors } from "./data";
-import { createElement } from "./lib";
+import { optColors, themeColors } from "./data";
+import { createElement, createStar } from "./lib";
 
 /**
  * @typedef {import('./types').Question} Question
@@ -19,12 +19,16 @@ export class App {
     constructor(questions) {
         this.questions = questions;
     }
+    //@ts-ignore
+    primaryColor = themeColors.GREEN;
     /** @type {Question[]} */
     questions = [];
     /** The current open question, starting with 0 */
-    currentQuestionId = 0;
+    currentQuestionId = 3;
     /** Relevant DOM elements. */
     dom = {
+        /** @type {HTMLHtmlElement} */ // @ts-ignore
+        root: document.querySelector("html"),
         /** @type {HTMLDivElement} */ // @ts-ignore
         content: document.querySelector(".form-content"),
         /** @type {HTMLButtonElement} */ // @ts-ignore
@@ -33,8 +37,6 @@ export class App {
         backButton: document.getElementById("back-button"),
         /** @type {HTMLElement} */ // @ts-ignore
         sidebar: document.querySelector(".sidebar"),
-        /** @type {SVGElement} */ // @ts-ignore
-        star: document.querySelector("hidden-icon[name=star] img"),
     };
     /**
      * Containers for the created questions.
@@ -44,6 +46,7 @@ export class App {
 
     /** Runs the app. */
     run() {
+        this.dom.root.style.setProperty("--primary-color", this.primaryColor);
         this.questions
             .map((question, index) => {
                 const questionElement = this.createQuestionElement(question);
@@ -72,7 +75,7 @@ export class App {
      * @returns {HTMLDivElement}
      */
     wrapInContainer(questionElement, id) {
-        /** @type {HTMLDivElement} */ //@ts-ignore
+        /** @type {HTMLDivElement} */
         const questionContainer = createElement("div");
         questionContainer.classList.add("question-container");
         questionContainer.id = `container-${id}`;
@@ -137,7 +140,7 @@ export class App {
                 break;
             }
             case "textbox": {
-                /** @type {HTMLTextAreaElement} */ //@ts-ignore
+                /** @type {HTMLTextAreaElement} */
                 const textarea = createElement("textarea");
                 textarea.classList.add("user-textbox");
                 textarea.title = `question-${question.id}`;
@@ -159,19 +162,45 @@ export class App {
                 const rating = createElement("div");
                 rating.classList.add("user-rating-box");
                 let i = 0;
-                while (i < 5) {
-                    /** @type {HTMLImageElement} */ // @ts-ignore
-                    const star = this.dom.star.cloneNode();
+                /**@type {SVGSVGElement[]} */
+                const stars = [];
+                const label = createElement("div");
+                for (let i = 0; i < 5; i++) {
+                    const star = createStar();
+                    star.classList.add("star");
+                    star.onclick = () => {
+                        stars
+                            .slice(0, i + 1)
+                            .forEach((star) =>
+                                star.setAttribute("fill", "#4ca566")
+                            );
+                        stars
+                            .slice(i + 1)
+                            .forEach((star) =>
+                                star.setAttribute("fill", "none")
+                            );
+                        label.innerText = `You selected ${i + 1} ${
+                            i + 1 == 1 ? "star" : "stars"
+                        }`;
+                        this.containers[this.currentQuestionId].setAttribute(
+                            "answered",
+                            "true"
+                        );
+                    };
                     star.setAttribute("value", `star-${i}`);
-                    rating.append(star);
-                    i++;
+                    stars.push(star);
                 }
+
+                label.innerText = `You selected 0 stars`;
+                label.classList.add("user-rating-label");
+                rating.append(...stars);
+                rating.append(label);
                 userActionArea.append(rating);
                 break;
             }
             case "select": {
                 const { options, id, prompt } = question;
-                /** @type {HTMLSelectElement} */ // @ts-ignore
+                /** @type {HTMLSelectElement} */
                 const select = createElement("select");
                 select.name = `question-${id}`;
                 select.title = prompt;
@@ -205,7 +234,7 @@ export class App {
             const imagesContainer = createElement("div");
             imagesContainer.classList.add("image-container");
             option.compositeImage.images.forEach((image) => {
-                /** @type {HTMLImageElement} */ //@ts-ignore
+                /** @type {HTMLImageElement} */
                 const img = createElement("img");
                 img.src = image.src;
                 img.alt = image.alt;
@@ -217,7 +246,7 @@ export class App {
                 `${index}00ms`
             );
 
-            /** @type {HTMLInputElement} */ // @ts-ignore
+            /** @type {HTMLInputElement} */
             const hiddenRadio = createElement("input");
             hiddenRadio.type = "radio";
             hiddenRadio.name = `question-${id}`;
@@ -272,7 +301,7 @@ export class App {
             opt.style.setProperty("--background", optColor.background);
             opt.style.setProperty("--animation-delay", `${index}00ms`);
 
-            /**@type {HTMLInputElement} */ // @ts-ignore
+            /**@type {HTMLInputElement} */
             const radio = createElement("input");
             radio.type = "radio";
             radio.title = value;
@@ -280,7 +309,7 @@ export class App {
             radio.classList.add("user-input-radio");
             opt.append(radio);
 
-            /**@type {HTMLLabelElement} */ // @ts-ignore
+            /**@type {HTMLLabelElement} */
             const label = createElement("label");
             label.setAttribute("for", value);
             label.innerHTML = `<span>${letter}</span> <span>${value}</span>`;
