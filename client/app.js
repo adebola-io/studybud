@@ -24,7 +24,7 @@ export class App {
     /** @type {Question[]} */
     questions = [];
     /** The current open question, starting with 0 */
-    currentQuestionId = 3;
+    currentQuestionId = 0;
     /** Relevant DOM elements. */
     dom = {
         /** @type {HTMLHtmlElement} */ // @ts-ignore
@@ -202,15 +202,32 @@ export class App {
                 const { options, id, prompt } = question;
                 /** @type {HTMLSelectElement} */
                 const select = createElement("select");
+                select.classList.add("user-select");
                 select.name = `question-${id}`;
                 select.title = prompt;
+                select.append(createElement("option"));
+
                 for (const option of options) {
-                    /** @type {HTMLOptionElement} */ // @ts-ignore
+                    /** @type {HTMLOptionElement} */
                     const optionElement = createElement("option");
                     optionElement.value = option;
                     optionElement.innerText = option;
                     select.append(optionElement);
                 }
+
+                select.onchange = () => {
+                    if (select.value.length === 0) {
+                        this.containers[this.currentQuestionId].removeAttribute(
+                            "answered"
+                        );
+                    } else {
+                        this.containers[this.currentQuestionId].setAttribute(
+                            "answered",
+                            "true"
+                        );
+                    }
+                };
+
                 userActionArea.append(select);
                 break;
             }
@@ -344,7 +361,10 @@ export class App {
             this.error("Answer question before proceeding!");
             return;
         }
-        if (this.currentQuestionId < this.questions.length) {
+
+        if (this.currentQuestionId === this.questions.length - 1) {
+            this.promptSubmission();
+        } else if (this.currentQuestionId < this.questions.length) {
             this.gotoQuestion(++this.currentQuestionId);
             this.dom.backButton.style.display = "flex";
         }
@@ -359,6 +379,13 @@ export class App {
                 this.dom.backButton.style.display = "none";
             }
         }
+    }
+
+    /**
+     * Ask the user if submission should proceed.
+     */
+    promptSubmission() {
+        alert("Submit?");
     }
 
     /**
@@ -381,6 +408,14 @@ export class App {
      */
     error(message) {
         this.alertUser(message, "error");
+    }
+
+    /**
+     * Notify user of a success.
+     * @param {string} message
+     */
+    success(message) {
+        this.alertUser(message, "success");
     }
 
     /**
