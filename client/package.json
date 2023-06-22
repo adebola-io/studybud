@@ -1,17 +1,17 @@
 {
-   "name": "pius-quizo",
-   "version": "1.0.0",
-   "description": "HTML Template",
-   "main": "index.js",
-   "scripts": {
-      "dev": "vite dev",
-      "build": "vite build",
-      "test": "echo \"Error: no test specified\" && exit 1"
-   },
-   "keywords": [],
-   "author": "",
-   "license": "ISC",
-   "devDependencies": {
-      "vite": "^4.3.3"
-   }
+    "name": "study-tool",
+    "version": "1.0.0",
+    "description": "Study tool for summarizing and generating questions from scholarly resources.",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vite dev",
+        "build": "vite build",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Adebola Akomolafe",
+    "license": "ISC",
+    "devDependencies": {
+        "vite": "^4.3.3"
+    }
 }
