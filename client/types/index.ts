@@ -1,11 +1,11 @@
-import { CompositeImage } from "./lib";
+import { CompositeImage } from "@/lib";
 
-type OptionLetter = "A" | "B" | "C" | "D";
-interface QuestionPrompt {
+export type OptionLetter = "A" | "B" | "C" | "D";
+export interface QuestionPrompt {
   prompt: string;
 }
 
-interface OptionalQuestion {
+export interface OptionalQuestion {
   type: "optional";
   options:
     | {
@@ -15,27 +15,28 @@ interface OptionalQuestion {
   correctAnswer: string;
 }
 
-interface TextQuestion {
+export interface TextQuestion {
   type: "textbox";
 }
 
-interface RatingQuestion {
+export interface RatingQuestion {
   type: "rating";
 }
 
-interface SelectQuestion {
+export interface SelectQuestion {
   type: "select";
   options: Array<string>;
 }
 
-type Question =
+export type Question =
   & {
     id: number;
     subtext?: string;
   }
   & QuestionPrompt
   & (OptionalQuestion | TextQuestion | RatingQuestion | SelectQuestion);
-type OptionColors = {
+
+export type OptionColors = {
   [key in OptionLetter]: {
     color: string;
     background: string;

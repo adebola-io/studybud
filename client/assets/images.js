@@ -3,12 +3,12 @@
 import { CompositeImage } from "../lib";
 
 const DOG = {
-   src: "https://templates.seekviral.com/trimba3/forms/InterestingQuiz/assets/images/pet1.png",
-   alt: "outline of dog",
+    src: "https://templates.seekviral.com/trimba3/forms/InterestingQuiz/assets/images/pet1.png",
+    alt: "outline of dog",
 };
 const CAT = {
-   src: "https://templates.seekviral.com/trimba3/forms/InterestingQuiz/assets/images/pet2.png",
-   alt: "outline of cat",
+    src: "https://templates.seekviral.com/trimba3/forms/InterestingQuiz/assets/images/pet2.png",
+    alt: "outline of cat",
 };
 
 export const Pet1 = new CompositeImage();

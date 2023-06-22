@@ -1,4 +1,4 @@
-const { readFileSync } = require("fs");
+const fs = require("fs");
 const { extname } = require("path");
 
 /**
@@ -6,7 +6,7 @@ const { extname } = require("path");
  * @param {fs.PathLike} file The file to transform.
  */
 function stringifytoBase64(file) {
-    return `data:image/svg+xml;base64,${readFileSync(file, {
+    return `data:image/svg+xml;base64,${fs.readFileSync(file, {
         encoding: "base64",
     })}`;
 }

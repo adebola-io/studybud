@@ -1,23 +1,22 @@
-import { optColors, themeColors } from "./data";
-import { createElement, createStar } from "./lib";
-
-/**
- * @typedef {import('./types').Question} Question
- * @typedef {import("./types").OptionLetter} OptionLetter
- * @typedef {import("./lib").CompositeImage} CompositeImage
- */
+import { optColors, themeColors } from "@/data";
+import { createElement, createStar } from ".";
 
 /**
  * @adebola-io
  * The Question App.
  */
-export class App {
+export class QuestionApp {
     /**
      * App contructor.
      * @param {Question[]} questions
+     * @param {QuestionAppElements} domElements The useful dom elements to edit.
      */
-    constructor(questions) {
+    constructor(questions, domElements) {
         this.questions = questions;
+        if (!domElements) {
+            throw new Error("Expected DOM Elements.");
+        }
+        this.dom = domElements;
     }
     //@ts-ignore
     primaryColor = themeColors.GREEN;
@@ -25,19 +24,8 @@ export class App {
     questions = [];
     /** The current open question, starting with 0 */
     currentQuestionId = 0;
-    /** Relevant DOM elements. */
-    dom = {
-        /** @type {HTMLHtmlElement} */ // @ts-ignore
-        root: document.querySelector("html"),
-        /** @type {HTMLDivElement} */ // @ts-ignore
-        content: document.querySelector(".form-content"),
-        /** @type {HTMLButtonElement} */ // @ts-ignore
-        continueButton: document.getElementById("continue-button"),
-        /** @type {HTMLButtonElement} */ // @ts-ignore
-        backButton: document.getElementById("back-button"),
-        /** @type {HTMLElement} */ // @ts-ignore
-        sidebar: document.querySelector(".sidebar"),
-    };
+    /** Relevant DOM elements. @type {QuestionAppElements} */
+    dom;
     /**
      * Containers for the created questions.
      * @type {HTMLDivElement[]}
@@ -241,7 +229,7 @@ export class App {
     /**
      * Create Boxed (Image) Options.
      * @param {number} id
-     * @param {{ compositeImage: CompositeImage; description: string }[]} options
+     * @param {{ compositeImage: import(".").CompositeImage; description: string }[]} options
      * @returns {HTMLElement[]}
      */
     createBoxOptions = (id, options) =>
@@ -306,7 +294,7 @@ export class App {
     createLetterOptions = (id, options) =>
         Object.entries(options).map((entry, index) => {
             /** The letter identfying this option.
-             * @type {import("./types").OptionLetter} */ // @ts-ignore
+             * @type {import("../types").OptionLetter} */ // @ts-ignore
             const letter = entry[0],
                 /** The value within this option. */
                 value = entry[1];
@@ -335,7 +323,7 @@ export class App {
             label.addEventListener("click", () => {
                 radio.setAttribute("checked", "true");
                 label.classList.add("selected");
-                document
+                this.containers[this.currentQuestionId]
                     .querySelectorAll(`input[name=question-${id}]`)
                     ?.forEach((input) => {
                         if (input !== radio) {
@@ -431,7 +419,7 @@ export class App {
         box.innerText = message;
         box.ontransitionend = () => box.remove();
         container.append(box);
-        document.body.prepend(container);
+        this.dom.body.prepend(container);
 
         setTimeout(() => {
             box.style.opacity = "0";
