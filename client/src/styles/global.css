@@ -1,0 +1,155 @@
+/* Base Screen: 1920px */
+@import url("https://fonts.googleapis.com/css2?family=Andika&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+/* Palette */
+:root {
+    --background: #131313;
+    --bice-blue: #386fa4;
+    --indigo-dye: #133c55;
+    --non-photo-blue: #91e5f6;
+    --picton-blue: #59a5d8;
+    --text: #dedede;
+
+    --NavBar-Height: 10vh;
+
+    --TransitionSpeed-Fast: 300ms;
+    --TransitionSpeed-Slow: 600ms;
+}
+@media (max-width: 820px) {
+    :root {
+        --NavBar-Height: 8vh;
+    }
+}
+
+/* Animations */
+@keyframes fade-in {
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes check-pop-up {
+    0% {
+        transform: scale(0);
+    }
+    75% {
+        transform: scale(120%);
+    }
+}
+
+@keyframes alert-drop-in {
+    0% {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    70% {
+        transform: translateY(10%);
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Layout */
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    background-color: var(--background);
+}
+.Icons-Overlay {
+    position: fixed;
+    z-index: -1;
+    width: 150%;
+    aspect-ratio: 1;
+    background-image: url(../../assets/images/icon-background.png);
+    background-position: center;
+    background-size: 68%;
+    animation: rotate 480000ms infinite linear;
+}
+@media (max-width: 912px) {
+    .Icons-Overlay {
+        width: auto;
+        height: 150%;
+    }
+}
+@media (max-width: 414px) {
+    .Icons-Overlay {
+        height: 120%;
+    }
+}
+.NavBar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    height: var(--NavBar-Height);
+    width: 100%;
+    padding-left: 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 38px;
+    flex-shrink: 0;
+    align-self: stretch;
+    border-bottom: 3px solid var(--picton-blue, #59a5d8);
+}
+.NavBar .Controls {
+    position: absolute;
+    left: 3vw;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.NavBar .Controls .BackButton {
+    display: none;
+}
+.NavBar .Controls .Lines {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    gap: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+@media (max-width: 1024px) {
+    .NavBar .Controls .Lines {
+        gap: 6px;
+    }
+}
+.NavBar .Controls .Lines > * {
+    background-color: var(--bice-blue);
+    width: 50px;
+    height: 5px;
+    border-radius: 8px;
+}
+@media (max-width: 1024px) {
+    .NavBar .Controls .Lines > * {
+        width: 37px;
+        height: 4px;
+    }
+}
+.Logo {
+    color: var(--pale-azure, #84d2f6);
+    font-family: Andika;
+    font-size: 31.263px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+@media (max-width: 1024px) {
+    .Logo {
+        font-size: 25px;
+    }
+}

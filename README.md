@@ -1,6 +1,8 @@
-<h1 align=center>AI Powered Study Tool</h1>
+<h1 align=center>StudyBud, an AI Powered Study Tool</h1>
 
-This is the code for an AI-powered study tool, with the backend written in Django and the frontend written in Vanilla JS.
+<p align=center><a href="https://github.com/adebola-io/quiz-taker/tree/master"><img src="https://img.shields.io/badge/status-stable-blue.svg"></a></p>
+
+This is the code for a StudyBud, a web app for summarization and question taking, with the backend written in Django and the frontend written in Vanilla JS.
 
 ## Documentation
 
