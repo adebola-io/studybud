@@ -71,7 +71,7 @@ body {
     z-index: -1;
     width: 150%;
     aspect-ratio: 1;
-    background-image: url(../../assets/images/icon-background.png);
+    background-image: url(/assets/images/icon-background.png);
     background-position: center;
     background-size: 68%;
     animation: rotate 480000ms infinite linear;
