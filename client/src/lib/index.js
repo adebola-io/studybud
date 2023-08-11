@@ -1,5 +1,7 @@
 export * from "./compositeImage";
 export * from "./questionApp";
+export * from "./sendUserAlert";
+export * from "./document.js";
 
 /**
  * Lightens a color by a value.

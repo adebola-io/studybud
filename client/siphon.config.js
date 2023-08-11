@@ -1,0 +1,3 @@
+module.exports = {
+    formatFiles: false,
+};

@@ -102,5 +102,5 @@ function convertImagetoBase64(image) {
     return stringifytoBase64(filePath, extension);
 }
 
-const image = convertImagetoBase64("icon-background.png");
+const image = convertImagetoBase64("correct.svg");
 fs.writeFileSync("icon-background.txt", image);

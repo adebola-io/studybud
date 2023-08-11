@@ -1,0 +1,103 @@
+/* Base Screen: 1920px */
+@import url("https://fonts.googleapis.com/css2?family=Andika&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+/* Palette */
+:root {
+    --background: #131313;
+    --bice-blue: #386fa4;
+    --indigo-dye: #133c55;
+    --non-photo-blue: #91e5f6;
+    --picton-blue: #59a5d8;
+    --text: #dedede;
+
+    --NavBar-Height: 10vh;
+
+    --TransitionSpeed-Fast: 300ms;
+    --TransitionSpeed-Slow: 600ms;
+}
+@media (max-width: 820px) {
+    :root {
+        --NavBar-Height: 8vh;
+    }
+}
+
+/* Animations */
+@keyframes fade-in {
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes check-pop-up {
+    0% {
+        transform: scale(0);
+    }
+    75% {
+        transform: scale(120%);
+    }
+}
+
+@keyframes alert-drop-in {
+    0% {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    70% {
+        transform: translateY(10%);
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    100% {
+        rotate: 360deg;
+    }
+}
+
+@keyframes drop-from-top {
+    0% {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    75% {
+        transform: translateY(50%);
+    }
+}
+
+@keyframes button-pulse {
+    100% {
+        transform: scale(1.2) scaleY(1.2);
+        opacity: 0;
+    }
+}
+/* Layout */
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    background-color: var(--background);
+}
+
+/* Alerts */
+.AlertBox {
+    position: fixed;
+    top: 0;
+    max-width: 270px;
+    text-align: center;
+    border-radius: 8px;
+    padding-block: 15px;
+    padding-inline: 8px;
+    margin-top: 5vh;
+    font-family: Lato;
+    animation: drop-from-top var(--TransitionSpeed-Slow);
+    transition-duration: var(--TransitionSpeed-Slow);
+}
+.AlertBox.error {
+    background-color: rgb(197, 44, 44);
+    color: white;
+}

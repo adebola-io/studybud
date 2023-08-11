@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "vite dev",
+        "siphon-dev": "siphon-cli -b --w",
         "build": "vite build",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
