@@ -1,11 +1,15 @@
 <script>
     import BackIcon from "@/assets/svg/back-icon.svg";
+    import { location } from "svelte-spa-router";
 </script>
 
 <header>
     <nav class="NavBar">
         <div class="Controls">
-            <div class="BackButton">
+            <div
+                style="display: {$location === '/' ? 'block' : 'none'}"
+                class="BackButton"
+            >
                 <img src={BackIcon} alt="back-icon" />
             </div>
             <button class="Lines">
@@ -44,7 +48,6 @@
 
     .NavBar .Controls .BackButton {
         cursor: pointer;
-        display: none;
     }
     .NavBar .Controls .Lines {
         display: flex;

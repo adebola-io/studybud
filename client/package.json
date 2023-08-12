@@ -12,5 +12,10 @@
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "svelte": "^4.0.5",
     "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "sass": "^1.65.1",
+    "svelte-preprocess": "^5.0.4",
+    "svelte-spa-router": "^3.3.0"
   }
 }

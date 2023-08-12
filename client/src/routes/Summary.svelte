@@ -1,20 +1,16 @@
 <script>
-    import { createEventDispatcher } from "svelte";
-
-    import Button from "../Button.svelte";
-    import UploadIcon from "../UploadIcon.svelte";
     import CopyIcon from "@/assets/svg/copy-icon.svg";
     import ExportIcon from "@/assets/svg/download-icon.svg";
+    import { MainLayout } from "@/layouts";
+    import { Button, UploadIcon } from "@/lib/ui";
+    import { formData } from "@/stores";
+    import { onMount } from "svelte";
 
-    /** @type {FormData} */
-    export let formData;
-    /** @type {FileUploadResponseData}*/
-    export let responseData;
+    let summary;
 
-    const dispatch = createEventDispatcher();
-
-    let summary = {
-        text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    onMount(() => {
+        summary = {
+            text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
@@ -49,41 +45,44 @@
         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
         dolore eu fugiat nulla pariatur.`,
-    };
+        };
+    });
 
     /** @type {string} */ // @ts-ignore
-    const filename = formData.get("document").name;
+    const filename = $formData.get("document").name;
 </script>
 
-<h1 class="Heading">Summary</h1>
-<div class="Box">
-    <div class="FileDetails">
-        <div class="FileBox">{filename}</div>
-        <Button layout="small" variant="filled-2">
-            <div slot="icon">
-                <UploadIcon />
-            </div>
+<MainLayout disallowWithoutFile>
+    <h1 class="Heading">Summary</h1>
+    <div class="Box">
+        <div class="FileDetails">
+            <div class="FileBox">{filename}</div>
+            <Button layout="small" variant="filled-2">
+                <div slot="icon">
+                    <UploadIcon />
+                </div>
 
-            Upload File
-        </Button>
+                Upload File
+            </Button>
+        </div>
+        <div class="SummaryContent">
+            {summary.text}
+        </div>
+        <div class="Toolbar">
+            <img
+                src={ExportIcon}
+                alt="Export Summary Icon"
+                title="Export Summary"
+            />
+            <img
+                on:click={() => navigator.clipboard.writeText(summary.text)}
+                src={CopyIcon}
+                alt="Copy Text Icon"
+                title="Copy Text"
+            />
+        </div>
     </div>
-    <div class="SummaryContent">
-        {summary.text}
-    </div>
-    <div class="Toolbar">
-        <img
-            src={ExportIcon}
-            alt="Export Summary Icon"
-            title="Export Summary"
-        />
-        <img
-            on:click={() => navigator.clipboard.writeText(summary.text)}
-            src={CopyIcon}
-            alt="Copy Text Icon"
-            title="Copy Text"
-        />
-    </div>
-</div>
+</MainLayout>
 
 <style>
     .Heading {

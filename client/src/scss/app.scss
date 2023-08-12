@@ -1,8 +1,5 @@
-/* Base Screen: 1920px */
-@import url("https://fonts.googleapis.com/css2?family=Andika&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap");
+@import url(./fonts.scss);
+@import url(./animations.scss);
 
 /* Palette */
 :root {
@@ -17,68 +14,11 @@
 
     --TransitionSpeed-Fast: 300ms;
     --TransitionSpeed-Slow: 600ms;
-}
-@media (max-width: 820px) {
-    :root {
+    @media (max-width: 820px) {
         --NavBar-Height: 8vh;
     }
 }
 
-/* Animations */
-@keyframes fade-in {
-    100% {
-        opacity: 100%;
-    }
-}
-
-@keyframes check-pop-up {
-    0% {
-        transform: scale(0);
-    }
-    75% {
-        transform: scale(120%);
-    }
-}
-
-@keyframes alert-drop-in {
-    0% {
-        transform: translateY(-50%);
-        opacity: 0;
-    }
-    70% {
-        transform: translateY(10%);
-        opacity: 1;
-    }
-}
-
-@keyframes rotate {
-    100% {
-        rotate: 360deg;
-    }
-}
-@keyframes fade-in-expand {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-}
-
-@keyframes drop-from-top {
-    0% {
-        transform: translateY(-50%);
-        opacity: 0;
-    }
-    75% {
-        transform: translateY(50%);
-    }
-}
-
-@keyframes button-pulse {
-    100% {
-        transform: scale(1.2) scaleY(1.2);
-        opacity: 0;
-    }
-}
 /* Layout */
 
 body {
@@ -122,50 +62,35 @@ body {
     font-weight: 400;
     line-height: 64px;
     padding-bottom: 30px;
-}
-
-@media (max-width: 1440px) {
-    .StageText {
+    @media (max-width: 1440px) {
         line-height: 75px;
     }
-}
-@media (max-width: 1366px) {
-    .StageText {
+    @media (max-width: 1366px) {
         font-size: 75px;
         padding-bottom: 25px;
     }
-}
-@media (max-width: 1024px) {
-    .StageText {
+    @media (max-width: 1024px) {
         line-height: 55px;
         font-size: 60px;
         padding-bottom: 15px;
     }
-}
-@media (max-width: 912px) {
-    .StageText {
+    @media (max-width: 912px) {
         width: 80%;
         line-height: 65px;
         font-size: 70px;
         padding-bottom: 15px;
     }
-}
-@media (max-width: 768px) {
-    .StageText {
+    @media (max-width: 768px) {
         width: 90%;
+        &.analyzed {
+            width: 80%;
+        }
     }
-    .StageText.analyzed {
-        width: 80%;
-    }
-}
-@media (max-width: 414px) {
-    .StageText {
+    @media (max-width: 414px) {
         font-size: 50px;
         line-height: 50px;
     }
-}
-@media (max-width: 360px) {
-    .StageText {
+    @media (max-width: 360px) {
         font-size: 45px;
         line-height: 45px;
     }

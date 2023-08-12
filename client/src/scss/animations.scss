@@ -1,0 +1,55 @@
+/* Animations */
+@keyframes fade-in {
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes check-pop-up {
+    0% {
+        transform: scale(0);
+    }
+    75% {
+        transform: scale(120%);
+    }
+}
+
+@keyframes alert-drop-in {
+    0% {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    70% {
+        transform: translateY(10%);
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    100% {
+        rotate: 360deg;
+    }
+}
+@keyframes fade-in-expand {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+@keyframes drop-from-top {
+    0% {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    75% {
+        transform: translateY(50%);
+    }
+}
+
+@keyframes button-pulse {
+    100% {
+        transform: scale(1.2) scaleY(1.2);
+        opacity: 0;
+    }
+}

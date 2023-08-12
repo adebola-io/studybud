@@ -7,8 +7,13 @@ declare global {
         detail: string;
     }
 
+    type Writable<T> = import("svelte/store").Writable<T>;
+
+    type InputChangeHandler =
+        import("svelte/elements").HTMLInputAttributes["on:change"];
+
     namespace dispatchers {
-        type StartDispatcher = import("svelte").EventDispatcher<{
+        type HomeDispatcher = import("svelte").EventDispatcher<{
             filechosen: FormData;
         }>;
         type ReadingFileDispatcher = import("svelte").EventDispatcher<{

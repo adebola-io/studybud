@@ -1,22 +1,20 @@
 <script>
-    import { createEventDispatcher, onMount } from "svelte";
-    import Button from "@/lib/Button.svelte";
-    const endpoint = import.meta.env.VITE_FILE_ENDPOINT;
-
-    /** @type {dispatchers.ReadingFileDispatcher}*/
-    const dispatch = createEventDispatcher();
-
-    /** @type {FormData} */
-    export let formData;
-    /**@type {File}*/ //@ts-ignore
-    const file = formData.get("document");
+    import { onMount } from "svelte";
+    import { pop, push } from "svelte-spa-router";
+    import { Button } from "@/lib/ui";
+    import { formData, overlayIsFocused, responseData } from "@/stores";
+    import { MainLayout } from "@/layouts";
 
     const controller = new AbortController();
+
+    /** @type {File} */ //@ts-ignore
+    const file = $formData.get("document").name;
 
     /**
      * Upload the file.
      */
     async function uploadFile() {
+        // const endpoint = import.meta.env.VITE_FILE_ENDPOINT;
         // const response = await fetch(endpoint, {
         //     method: "POST",
         //     mode: "no-cors",
@@ -39,21 +37,27 @@
 
     function cancelUpload() {
         controller.abort();
-        dispatch("cancel");
+        pop();
     }
 
     onMount(() => {
-        uploadFile().then((data) => {
-            dispatch("analyzed", data);
-        });
+        overlayIsFocused.set(true);
+        uploadFile()
+            .then((data) => {
+                responseData.set(data);
+                push("/file-analyzed");
+            })
+            .catch(() => overlayIsFocused.set(false));
     });
 </script>
 
-<div class="StageText Reading">Reading File...</div>
-<div class="FileBox">
-    {file.name}
-</div>
-<Button variant="filled" on:click={cancelUpload}>Cancel</Button>
+<MainLayout disallowWithoutFile>
+    <div class="StageText Reading">Reading File...</div>
+    <div class="FileBox">
+        {file.name}
+    </div>
+    <Button variant="filled" on:click={cancelUpload}>Cancel</Button>
+</MainLayout>
 
 <style>
     .StageText.Reading {
@@ -64,5 +68,4 @@
         background: unset;
         width: fit-content;
     }
-    
 </style>
