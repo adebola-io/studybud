@@ -54,12 +54,14 @@
         accept=".docx,.pdf,.txt"
         hidden
     />
-    <Button type="button" on:click={openExplorer}>
-        <div slot="icon">
-            <UploadIcon />
-        </div>
-        Upload File
-    </Button>
+    <div style="margin-top: 30px;">
+        <Button type="button" on:click={openExplorer}>
+            <div slot="icon">
+                <UploadIcon />
+            </div>
+            Upload File
+        </Button>
+    </div>
 </form>
 
 <style lang="scss">

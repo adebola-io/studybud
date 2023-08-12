@@ -56,7 +56,6 @@
         border: none;
         cursor: pointer;
         transition-duration: var(--TransitionSpeed-Fast);
-        margin-top: 20px;
         &.normal {
             width: 291.294px;
             aspect-ratio: 4.175419987386;

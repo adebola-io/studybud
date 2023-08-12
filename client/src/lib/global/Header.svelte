@@ -23,7 +23,7 @@
     </nav>
 </header>
 
-<style>
+<style lang="scss">
     .NavBar {
         position: fixed;
         left: 0;
@@ -45,12 +45,20 @@
         display: flex;
         justify-content: center;
         align-content: center;
+        height: 100%;
     }
 
     .NavBar .Controls .BackButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: transparent;
         border: none;
         cursor: pointer;
+        height: 100%;
+        img {
+            height: 70%;
+        }
     }
     .NavBar .Controls .Lines {
         display: flex;

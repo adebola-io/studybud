@@ -40,6 +40,8 @@
         notify("Summary copied", "success", 800);
     }
 
+    function exportAsPDF() {}
+
     onMount(queryForSummary);
 </script>
 
@@ -57,17 +59,20 @@
                 accept=".docx,.pdf,.txt"
                 hidden
             />
-            <Button
-                type="button"
-                layout="small"
-                variant="filled"
-                on:click={openExplorer}
-            >
-                <div slot="icon">
-                    <UploadIcon />
-                </div>
-                Upload File
-            </Button>
+            <div class="ButtonContainer">
+                <Button
+                    class="UploadButton"
+                    type="button"
+                    layout="small"
+                    variant="filled"
+                    on:click={openExplorer}
+                >
+                    <div slot="icon">
+                        <UploadIcon />
+                    </div>
+                    Upload File
+                </Button>
+            </div>
         </form>
     </div>
 
@@ -80,7 +85,9 @@
                 <Button on:click={queryForSummary}>Retry</Button>
             </div>
         {:else}
-            {summary.text}
+            <div class="ContentInner">
+                {summary.text}
+            </div>
         {/if}
     </div>
     <div class="Toolbar">
@@ -89,7 +96,7 @@
                 title="Export Summary"
                 type="button"
                 class="Toolbar-Icon"
-                on:click={() => navigator.clipboard.writeText(summary.text)}
+                on:click={exportAsPDF}
             >
                 <img src={ExportIcon} alt="Export Summary Icon" />
             </button>
@@ -127,6 +134,10 @@
         box-shadow: 8px 8px 7px 0px #003f53;
         --start: 0.5;
         animation: fade-in-expand 500ms;
+        @media (aspect-ratio < 0.7) {
+            flex-direction: column;
+            width: 85vw;
+        }
     }
     .FileDetails {
         position: relative;
@@ -139,9 +150,23 @@
         height: 100%;
         background: var(--background, #131313);
         border-right: 3.75px solid var(--pale-azure, #84d2f6);
+        .ButtonContainer {
+            margin-top: 30px;
+        }
+        @media (aspect-ratio < 0.7) {
+            flex-direction: row;
+            justify-content: space-between;
+            padding-inline: 25px;
+            border-right: none;
+            border-bottom: 3.75px solid var(--pale-azure, #84d2f6);
+            width: calc(100% - 50px);
+            height: 15%;
+            .ButtonContainer {
+                margin-top: 0;
+            }
+        }
     }
     .SummaryContent {
-        padding: 25px 2.8125rem 0 1.25rem;
         width: 65%;
         height: calc(100% - 100px);
         color: #fff;
@@ -150,6 +175,12 @@
         font-size: 1rem;
         font-weight: 400;
         overflow-y: scroll;
+        .ContentInner {
+            padding: 25px;
+            @media (aspect-ratio < 0.7) {
+                padding: 15px;
+            }
+        }
         &::-webkit-scrollbar {
             background-color: transparent;
         }
@@ -157,6 +188,10 @@
             background-color: var(--bice-blue, #386fa4);
             opacity: 0.5;
             border-radius: 30px;
+        }
+        @media (aspect-ratio < 0.7) {
+            width: 100%;
+            height: 85%;
         }
     }
 
@@ -179,6 +214,9 @@
             background-color: transparent;
             border: none;
             cursor: pointer;
+        }
+        @media (aspect-ratio < 0.7) {
+            width: 100%;
         }
     }
 </style>
