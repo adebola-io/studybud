@@ -2,7 +2,7 @@
 
 <p align=center><a href="https://github.com/adebola-io/quiz-taker/tree/master"><img src="https://img.shields.io/badge/status-stable-blue.svg"></a></p>
 
-This is the code for a StudyBud, a web app for summarization and question taking, with the backend written in Django and the frontend written in Vanilla JS.
+This is the code for a StudyBud, a web app for summarization and question taking, with the backend written in Django and the frontend written in Svelte.
 
 ## Documentation
 
