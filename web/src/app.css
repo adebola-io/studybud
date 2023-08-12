@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Andika&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap");
 
 /* Palette */
 :root {
@@ -55,6 +56,12 @@
         rotate: 360deg;
     }
 }
+@keyframes fade-in-expand {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
 
 @keyframes drop-from-top {
     0% {
@@ -100,4 +107,76 @@ body {
 .AlertBox.error {
     background-color: rgb(197, 44, 44);
     color: white;
+}
+
+.StageText {
+    background: linear-gradient(to right, #c729ff, #4c83f4, #1be1fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Alata;
+    font-size: 85px;
+    width: 60%;
+    height: fit-content;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 64px;
+    padding-bottom: 30px;
+}
+
+@media (max-width: 1440px) {
+    .StageText {
+        line-height: 75px;
+    }
+}
+@media (max-width: 1366px) {
+    .StageText {
+        font-size: 75px;
+        padding-bottom: 25px;
+    }
+}
+@media (max-width: 1024px) {
+    .StageText {
+        line-height: 55px;
+        font-size: 60px;
+        padding-bottom: 15px;
+    }
+}
+@media (max-width: 912px) {
+    .StageText {
+        width: 80%;
+        line-height: 65px;
+        font-size: 70px;
+        padding-bottom: 15px;
+    }
+}
+@media (max-width: 768px) {
+    .StageText {
+        width: 90%;
+    }
+    .StageText.analyzed {
+        width: 80%;
+    }
+}
+@media (max-width: 414px) {
+    .StageText {
+        font-size: 50px;
+        line-height: 50px;
+    }
+}
+@media (max-width: 360px) {
+    .StageText {
+        font-size: 45px;
+        line-height: 45px;
+    }
+}
+
+.FileBox {
+    max-width: 60%;
+    font-family: Lato;
+    padding-inline: 25px;
+    padding-block: 10px;
+    border-radius: 0.5rem;
+    border: 2px solid var(--bice-blue, #386fa4);
+    color: var(--text, #dedede);
 }

@@ -1,8 +1,12 @@
+<script>
+    import BackIcon from "@/assets/svg/back-icon.svg";
+</script>
+
 <header>
     <nav class="NavBar">
         <div class="Controls">
             <div class="BackButton">
-                <img src="../../assets/svg/back-icon.svg" alt="back-icon" />
+                <img src={BackIcon} alt="back-icon" />
             </div>
             <button class="Lines">
                 <div />

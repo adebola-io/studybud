@@ -1,6 +1,29 @@
 <script>
-    import Button from "../lib/Button.svelte";
-    import UploadIcon from "../assets/svg/upload-icon.svg";
+    import UploadIcon from "@/lib/UploadIcon.svelte";
+    import Button from "../Button.svelte";
+
+    import { createEventDispatcher } from "svelte";
+
+    /** @type {dispatchers.StartDispatcher} */
+    const dispatch = createEventDispatcher();
+
+    /** @type {HTMLInputElement}*/
+    let fileInput;
+
+    /**
+     * Handles file select.
+     * @type {import("svelte/elements").HTMLInputAttributes['on:change']}
+     */
+    const handleFileSelect = (event) => {
+        /** @type {HTMLFormElement}*/ //@ts-ignore
+        const { form } = event.target;
+        const formData = new FormData(form);
+        dispatch("filechosen", formData);
+    };
+
+    const openExplorer = () => {
+        fileInput.click();
+    };
 </script>
 
 <div class="StageText">Streamline, analyze and engage.</div>
@@ -24,87 +47,26 @@
         nurturing your inquisitive nature and expanding your understanding.
     </span>
 </div>
-<Button icon={UploadIcon}>
+<form enctype="multipart/form-data" novalidate>
     <input
+        bind:this={fileInput}
+        on:change={handleFileSelect}
         class="FileInput"
+        name="document"
         type="file"
         id="study-file"
         accept=".doc,.docx,.pdf,.txt"
         hidden
     />
-    Upload File
-</Button>
+    <Button type="button" on:click={openExplorer} icon={UploadIcon}>
+        <div slot="icon">
+            <UploadIcon />
+        </div>
+        Upload File
+    </Button>
+</form>
 
 <style>
-    .StageText {
-        background: linear-gradient(to right, #c729ff, #4c83f4, #1be1fc);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-family: Alata;
-        font-size: 85px;
-        width: 60%;
-        height: fit-content;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 64px;
-        padding-bottom: 30px;
-    }
-    .StageText.Reading {
-        color: var(--pale-azure, #84d2f6);
-        -webkit-background-clip: unset;
-        -webkit-text-fill-color: unset;
-        background-clip: unset;
-        background: unset;
-        width: fit-content;
-    }
-
-    @media (max-width: 1440px) {
-        .StageText {
-            line-height: 75px;
-        }
-    }
-    @media (max-width: 1366px) {
-        .StageText {
-            font-size: 75px;
-            padding-bottom: 25px;
-        }
-    }
-    @media (max-width: 1024px) {
-        .StageText {
-            line-height: 55px;
-            font-size: 60px;
-            padding-bottom: 15px;
-        }
-    }
-    @media (max-width: 912px) {
-        .StageText {
-            width: 80%;
-            line-height: 65px;
-            font-size: 70px;
-            padding-bottom: 15px;
-        }
-    }
-    @media (max-width: 768px) {
-        .StageText {
-            width: 90%;
-        }
-        .StageText.analyzed {
-            width: 80%;
-        }
-    }
-    @media (max-width: 414px) {
-        .StageText {
-            font-size: 50px;
-            line-height: 50px;
-        }
-    }
-    @media (max-width: 360px) {
-        .StageText {
-            font-size: 45px;
-            line-height: 45px;
-        }
-    }
     .ExplanationText {
         color: var(--text, #dedede);
         width: 50%;

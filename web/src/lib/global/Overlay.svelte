@@ -1,7 +1,11 @@
 <!-- Icon Overlay. -->
+<script>
+    /** Whether overlay should be focused. */
+    export let focused = false;
+</script>
 
 <div class="Overlay-Container">
-    <div class="Icons-Overlay" />
+    <div class={"Icons-Overlay" + (focused ? " Focused" : "")} />
 </div>
 
 <style>
@@ -20,17 +24,13 @@
         aspect-ratio: 1;
         background-image: url(../../assets//backgrounds/icon-background.png);
         background-position: center;
-        background-repeat: no-repeat;
         background-size: 100%;
         animation-fill-mode: both;
-        animation: animate-overlay 700ms, rotate 480000ms infinite linear;
+        animation: fade-in-expand 700ms, rotate 480000ms infinite linear;
         transition-duration: 600ms;
     }
-    @keyframes animate-overlay {
-        from {
-            opacity: 0;
-            transform: scale(0.9);
-        }
+    .Icons-Overlay.Focused {
+        scale: 1.35;
     }
 
     @media (max-width: 912px) {
