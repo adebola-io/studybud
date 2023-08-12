@@ -1,12 +1,13 @@
 <script>
     import CopyIcon from "@/assets/svg/copy-icon.svg";
     import ExportIcon from "@/assets/svg/download-icon.svg";
-    import { MainLayout } from "@/layouts";
     import { Button, UploadIcon } from "@/lib/ui";
-    import { formData } from "@/stores";
+    import { uploadData } from "@/stores";
     import { onMount } from "svelte";
+    import { params, push, pop } from "svelte-spa-router";
 
-    let summary;
+    let summary = { text: "" };
+    const filename = $uploadData.name;
 
     onMount(() => {
         summary = {
@@ -47,44 +48,39 @@
         dolore eu fugiat nulla pariatur.`,
         };
     });
-
-    /** @type {string} */ // @ts-ignore
-    const filename = $formData.get("document").name;
 </script>
 
-<MainLayout disallowWithoutFile>
-    <h1 class="Heading">Summary</h1>
-    <div class="Box">
-        <div class="FileDetails">
-            <div class="FileBox">{filename}</div>
-            <Button layout="small" variant="filled-2">
-                <div slot="icon">
-                    <UploadIcon />
-                </div>
+<h1 class="Heading">Summary</h1>
+<div class="Box">
+    <div class="FileDetails">
+        <div class="FileBox">{filename}</div>
+        <Button layout="small" variant="filled-2">
+            <div slot="icon">
+                <UploadIcon />
+            </div>
 
-                Upload File
-            </Button>
-        </div>
-        <div class="SummaryContent">
-            {summary.text}
-        </div>
-        <div class="Toolbar">
-            <img
-                src={ExportIcon}
-                alt="Export Summary Icon"
-                title="Export Summary"
-            />
-            <img
-                on:click={() => navigator.clipboard.writeText(summary.text)}
-                src={CopyIcon}
-                alt="Copy Text Icon"
-                title="Copy Text"
-            />
-        </div>
+            Upload File
+        </Button>
     </div>
-</MainLayout>
+    <div class="SummaryContent">
+        {summary.text}
+    </div>
+    <div class="Toolbar">
+        <img
+            src={ExportIcon}
+            alt="Export Summary Icon"
+            title="Export Summary"
+        />
+        <img
+            on:click={() => navigator.clipboard.writeText(summary.text)}
+            src={CopyIcon}
+            alt="Copy Text Icon"
+            title="Copy Text"
+        />
+    </div>
+</div>
 
-<style>
+<style lang="scss">
     .Heading {
         color: var(--pale-azure, #84d2f6);
         text-align: center;
@@ -101,11 +97,12 @@
         width: 75vw;
         height: 70vh;
         overflow: hidden;
-
         border-radius: 2.0725rem;
         border: 3.747px solid var(--pale-azure, #84d2f6);
         background: var(--background, #131313);
         box-shadow: 8px 8px 7px 0px #003f53;
+        --start: 0.5;
+        animation: fade-in-expand 500ms;
     }
     .FileDetails {
         position: relative;

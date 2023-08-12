@@ -1,16 +1,6 @@
 <script>
-    import { onMount } from "svelte";
-    import { push } from "svelte-spa-router";
     import { Header, Overlay } from "@/lib/global";
-    import { overlayIsFocused, formData } from "@/stores";
-
-    export let disallowWithoutFile = false;
-
-    onMount(() => {
-        if (disallowWithoutFile && $formData === null) {
-            push("/");
-        }
-    });
+    import { overlayIsFocused } from "@/stores";
 </script>
 
 <Overlay focused={$overlayIsFocused} />

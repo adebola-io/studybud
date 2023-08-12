@@ -1,6 +1,9 @@
 <script>
-    import Router from "svelte-spa-router";
+    import Router, { push } from "svelte-spa-router";
     import routes from "./routes";
+    import { MainLayout } from "./layouts";
 </script>
 
-<Router {routes} />
+<MainLayout>
+    <Router {routes} on:conditionsFailed={() => push("/")} />
+</MainLayout>

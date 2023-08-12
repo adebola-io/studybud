@@ -1,4 +1,7 @@
-<!-- Icon Overlay. -->
+<!-- 
+    @component
+    Icon Overlay. 
+-->
 <script>
     /** Whether overlay should be focused. */
     export let focused = false;
@@ -26,6 +29,7 @@
         background-position: center;
         background-size: 100%;
         animation-fill-mode: both;
+        --start: 0.9;
         animation: fade-in-expand 700ms, rotate 480000ms infinite linear;
         transition-duration: 600ms;
     }

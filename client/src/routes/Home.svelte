@@ -1,20 +1,19 @@
 <script>
-    import { MainLayout } from "@/layouts";
     import { Button, UploadIcon } from "@/lib/ui";
-    import { formData } from "@/stores";
+    import { uploadData } from "@/stores";
+
     import { push } from "svelte-spa-router";
 
     /** @type {HTMLInputElement}*/
     let fileInput;
 
-    /**
-     * Handles file select.
-     * @type {InputChangeHandler}
-     */
     const handleFileSelect = (event) => {
         /** @type {HTMLFormElement}*/ //@ts-ignore
         const { form } = event.target;
-        formData.set(new FormData(form));
+        uploadData.set({
+            formData: new FormData(form),
+            name: event.target.files[0].name,
+        });
         push("/reading-file");
     };
 
@@ -23,47 +22,45 @@
     };
 </script>
 
-<MainLayout>
-    <div class="StageText">Streamline, analyze and engage.</div>
-    <div class="ExplanationText">
-        <span class="Sentence-1">
-            Welcome to StudyBud, the ultimate companion for unlocking
-            knowledge's potential.
-        </span><span class="Sentence-2">
-            This tool offers a groundbreaking solution to summarize scholarly
-            articles, school materials, and research papers
-            <span class="Sentence-2-EndPhrase"
-                >, saving you valuable time and effort.</span
-            >
-        </span>
-        <span class="Sentence-3">
-            You can use StudyBud to extract core information, giving you key
-            insights at your fingertips.
-        </span>
-        <span class="Sentence-4">
-            You can also generate thought-provoking questions based on the text,
-            nurturing your inquisitive nature and expanding your understanding.
-        </span>
-    </div>
-    <form enctype="multipart/form-data">
-        <input
-            bind:this={fileInput}
-            on:change={handleFileSelect}
-            class="FileInput"
-            name="document"
-            type="file"
-            id="study-file"
-            accept=".docx,.pdf,.txt"
-            hidden
-        />
-        <Button type="button" on:click={openExplorer}>
-            <div slot="icon">
-                <UploadIcon />
-            </div>
-            Upload File
-        </Button>
-    </form>
-</MainLayout>
+<div class="StageText">Streamline, analyze and engage.</div>
+<div class="ExplanationText">
+    <span class="Sentence-1">
+        Welcome to StudyBud, the ultimate companion for unlocking knowledge's
+        potential.
+    </span><span class="Sentence-2">
+        This tool offers a groundbreaking solution to summarize scholarly
+        articles, school materials, and research papers
+        <span class="Sentence-2-EndPhrase"
+            >, saving you valuable time and effort.</span
+        >
+    </span>
+    <span class="Sentence-3">
+        You can use StudyBud to extract core information, giving you key
+        insights at your fingertips.
+    </span>
+    <span class="Sentence-4">
+        You can also generate thought-provoking questions based on the text,
+        nurturing your inquisitive nature and expanding your understanding.
+    </span>
+</div>
+<form enctype="multipart/form-data">
+    <input
+        bind:this={fileInput}
+        on:change={handleFileSelect}
+        class="FileInput"
+        name="document"
+        type="file"
+        id="study-file"
+        accept=".docx,.pdf,.txt"
+        hidden
+    />
+    <Button type="button" on:click={openExplorer}>
+        <div slot="icon">
+            <UploadIcon />
+        </div>
+        Upload File
+    </Button>
+</form>
 
 <style lang="scss">
     .ExplanationText {

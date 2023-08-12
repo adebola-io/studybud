@@ -1,17 +1,18 @@
 <script>
     import BackIcon from "@/assets/svg/back-icon.svg";
-    import { location } from "svelte-spa-router";
+    import { location, pop } from "svelte-spa-router";
 </script>
 
 <header>
     <nav class="NavBar">
         <div class="Controls">
-            <div
-                style="display: {$location === '/' ? 'block' : 'none'}"
+            <button
+                on:click={() => pop()}
+                style="display: {$location !== '/' ? 'block' : 'none'}"
                 class="BackButton"
             >
                 <img src={BackIcon} alt="back-icon" />
-            </div>
+            </button>
             <button class="Lines">
                 <div />
                 <div />
@@ -47,6 +48,8 @@
     }
 
     .NavBar .Controls .BackButton {
+        background-color: transparent;
+        border: none;
         cursor: pointer;
     }
     .NavBar .Controls .Lines {

@@ -1,19 +1,19 @@
 <script>
     import { push, params } from "svelte-spa-router";
-    import { MainLayout } from "@/layouts";
     import { Button, UploadIcon } from "@/lib/ui";
-    import { formData } from "@/stores";
-
-    /** @type {string} */ //@ts-ignore
-    let fileName = $formData?.get("document").name;
+    import { uploadData } from "@/stores";
 
     /** @type {HTMLInputElement} */
     let fileInput;
+    let filename = $uploadData.name;
 
     function handleFileSelect(event) {
         /** @type {HTMLFormElement}*/ //@ts-ignore
         const { form } = event.target;
-        formData.set(new FormData(form));
+        uploadData.set({
+            formData: new FormData(form),
+            name: event.target.files[0].name,
+        });
         push("/reading-file");
     }
 
@@ -26,36 +26,34 @@
     }
 </script>
 
-<MainLayout disallowWithoutFile>
-    <div class="StageText Analyzed">File Analyzed.</div>
-    <div class="FileBox">
-        {fileName}
-    </div>
-    <div class="ButtonContainer">
-        <Button on:click={generateQuestions} variant="filled-2">
-            Generate Questions
-        </Button>
-        <Button on:click={summarize} variant="filled-2">Summarize</Button>
-    </div>
-    <form enctype="multipart/form-data" novalidate>
-        <input
-            bind:this={fileInput}
-            on:change={handleFileSelect}
-            class="FileInput"
-            name="document"
-            type="file"
-            id="study-file"
-            accept=".doc,.docx,.pdf,.txt"
-            hidden
-        />
-        <Button on:click={() => fileInput.click()}>
-            <div slot="icon">
-                <UploadIcon />
-            </div>
-            Upload another file.
-        </Button>
-    </form>
-</MainLayout>
+<div class="StageText Analyzed">File Analyzed.</div>
+<div class="FileBox">
+    {filename}
+</div>
+<div class="ButtonContainer">
+    <Button on:click={generateQuestions} variant="filled-2">
+        Generate Questions
+    </Button>
+    <Button on:click={summarize} variant="filled-2">Summarize</Button>
+</div>
+<form enctype="multipart/form-data" novalidate>
+    <input
+        bind:this={fileInput}
+        on:change={handleFileSelect}
+        class="FileInput"
+        name="document"
+        type="file"
+        id="study-file"
+        accept=".doc,.docx,.pdf,.txt"
+        hidden
+    />
+    <Button on:click={() => fileInput.click()}>
+        <div slot="icon">
+            <UploadIcon />
+        </div>
+        Upload another file.
+    </Button>
+</form>
 
 <style lang="scss">
     .StageText.Analyzed {

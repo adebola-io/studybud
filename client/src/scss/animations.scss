@@ -33,7 +33,7 @@
 @keyframes fade-in-expand {
     from {
         opacity: 0;
-        transform: scale(0.9);
+        scale: var(--start);
     }
 }
 
