@@ -28,7 +28,7 @@
      */
     function handleClick(event) {
         dispatch("click", {
-            forwardedEvent: event,
+            forwarded: event,
         });
     }
 </script>

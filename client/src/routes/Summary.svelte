@@ -1,82 +1,107 @@
 <script>
     import CopyIcon from "@/assets/svg/copy-icon.svg";
     import ExportIcon from "@/assets/svg/download-icon.svg";
-    import { Button, UploadIcon } from "@/lib/ui";
+    import { Button, Loader, UploadIcon } from "@/lib/ui";
     import { uploadData } from "@/stores";
+    import { getSummary, notify, openExplorer, uploadFile } from "@/utils";
     import { onMount } from "svelte";
-    import { params, push, pop } from "svelte-spa-router";
+    import { pop, replace, params } from "svelte-spa-router";
 
     let summary = { text: "" };
+    let isLoading = true;
+    let isError = false;
+
     const filename = $uploadData.name;
 
-    onMount(() => {
-        summary = {
-            text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-        qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit
-        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Duis aute irure dolor
-        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-        qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit
-        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur.`,
-        };
-    });
+    function queryForSummary() {
+        isLoading = true;
+        isError = false;
+        getSummary($params.id)
+            .then((_summary) => {
+                summary = _summary;
+            })
+            .catch((error) => {
+                notify(error.message, "error");
+                isError = true;
+            })
+            .finally(() => (isLoading = false));
+    }
+
+    function handleFileSelect(event) {
+        /** @type {HTMLFormElement}*/ //@ts-ignore
+        const { form } = event.target;
+        uploadFile(new FormData(form)).then((data) =>
+            pop().then(() => replace(`/file-analyzed/${data.id}`))
+        );
+    }
+
+    function copySummary() {
+        navigator.clipboard.writeText(summary.text);
+        notify("Summary copied", "success", 800);
+    }
+
+    onMount(queryForSummary);
 </script>
 
 <h1 class="Heading">Summary</h1>
 <div class="Box">
     <div class="FileDetails">
         <div class="FileBox">{filename}</div>
-        <Button layout="small" variant="filled-2">
-            <div slot="icon">
-                <UploadIcon />
-            </div>
-
-            Upload File
-        </Button>
+        <form enctype="multipart/form-data">
+            <input
+                class="FileInput"
+                on:change={handleFileSelect}
+                name="document"
+                type="file"
+                id="study-file"
+                accept=".docx,.pdf,.txt"
+                hidden
+            />
+            <Button
+                type="button"
+                layout="small"
+                variant="filled"
+                on:click={openExplorer}
+            >
+                <div slot="icon">
+                    <UploadIcon />
+                </div>
+                Upload File
+            </Button>
+        </form>
     </div>
+
     <div class="SummaryContent">
-        {summary.text}
+        {#if isLoading}
+            <div class="Full-Center"><Loader width={50} /></div>
+        {:else if isError}
+            <div class="Full-Center Flex-Col">
+                Something went wrong.
+                <Button on:click={queryForSummary}>Retry</Button>
+            </div>
+        {:else}
+            {summary.text}
+        {/if}
     </div>
     <div class="Toolbar">
-        <img
-            src={ExportIcon}
-            alt="Export Summary Icon"
-            title="Export Summary"
-        />
-        <img
-            on:click={() => navigator.clipboard.writeText(summary.text)}
-            src={CopyIcon}
-            alt="Copy Text Icon"
-            title="Copy Text"
-        />
+        {#if !(isLoading || isError)}
+            <button
+                title="Export Summary"
+                type="button"
+                class="Toolbar-Icon"
+                on:click={() => navigator.clipboard.writeText(summary.text)}
+            >
+                <img src={ExportIcon} alt="Export Summary Icon" />
+            </button>
+            <button
+                title="Copy Text"
+                type="button"
+                class="Toolbar-Icon"
+                on:click={copySummary}
+            >
+                <img src={CopyIcon} alt="Copy Text Icon" />
+            </button>
+        {/if}
     </div>
 </div>
 
@@ -87,7 +112,6 @@
         font-family: Alata;
         font-size: 2.68125rem;
         margin-bottom: 0;
-        font-style: normal;
         font-weight: 400;
         line-height: 4rem; /* 149.184% */
     }
@@ -117,32 +141,25 @@
         border-right: 3.75px solid var(--pale-azure, #84d2f6);
     }
     .SummaryContent {
-        display: flex;
         padding: 25px 2.8125rem 0 1.25rem;
-        align-items: flex-start;
-        flex: 1 0 0;
-        align-self: stretch;
-
         width: 65%;
         height: calc(100% - 100px);
         color: #fff;
+        text-align: start;
         font-family: Alata;
         font-size: 1rem;
-        font-style: normal;
         font-weight: 400;
-        line-height: normal;
-        text-align: left;
-        justify-content: center;
         overflow-y: scroll;
+        &::-webkit-scrollbar {
+            background-color: transparent;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: var(--bice-blue, #386fa4);
+            opacity: 0.5;
+            border-radius: 30px;
+        }
     }
-    .SummaryContent::-webkit-scrollbar {
-        background-color: transparent;
-    }
-    .SummaryContent::-webkit-scrollbar-track {
-        background-color: var(--bice-blue, #386fa4);
-        opacity: 0.5;
-        border-radius: 30px;
-    }
+
     .Toolbar {
         position: absolute;
         z-index: 0;
@@ -158,8 +175,10 @@
         align-self: stretch;
         background: var(--background, #131313);
         border-top: 1.95px solid var(--pale-azure, #84d2f6);
-    }
-    .Toolbar > * {
-        cursor: pointer;
+        .Toolbar-Icon {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
     }
 </style>

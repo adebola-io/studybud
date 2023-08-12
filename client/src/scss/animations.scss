@@ -30,6 +30,11 @@
         rotate: 360deg;
     }
 }
+@keyframes rotate-inverted {
+    100% {
+        rotate: -360deg;
+    }
+}
 @keyframes fade-in-expand {
     from {
         opacity: 0;

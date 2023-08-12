@@ -1,20 +1,20 @@
 <script>
+    import { replace } from "svelte-spa-router";
     import { Button, UploadIcon } from "@/lib/ui";
+    import { uploadFile } from "@/utils";
     import { uploadData } from "@/stores";
-
-    import { push } from "svelte-spa-router";
 
     /** @type {HTMLInputElement}*/
     let fileInput;
 
+    uploadData.set(null);
+
     const handleFileSelect = (event) => {
         /** @type {HTMLFormElement}*/ //@ts-ignore
         const { form } = event.target;
-        uploadData.set({
-            formData: new FormData(form),
-            name: event.target.files[0].name,
+        uploadFile(new FormData(form)).then((data) => {
+            replace(`/file-analyzed/${data.id}`);
         });
-        push("/reading-file");
     };
 
     const openExplorer = () => {

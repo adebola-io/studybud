@@ -1,10 +1,14 @@
 <script>
     import { Header, Overlay } from "@/lib/global";
-    import { overlayIsFocused } from "@/stores";
+    import { Notification } from "@/lib/ui";
+    import { overlayIsFocused, notification } from "@/stores";
 </script>
 
 <Overlay focused={$overlayIsFocused} />
 <Header />
+{#if $notification.message}
+    <Notification type={$notification.type} message={$notification.message} />
+{/if}
 <main class="CenterStage">
     <slot />
 </main>

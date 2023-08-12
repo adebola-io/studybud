@@ -1,20 +1,17 @@
 <script>
-    import { push, params } from "svelte-spa-router";
+    import { push, params, replace } from "svelte-spa-router";
     import { Button, UploadIcon } from "@/lib/ui";
     import { uploadData } from "@/stores";
+    import { openExplorer, uploadFile } from "@/utils";
 
-    /** @type {HTMLInputElement} */
-    let fileInput;
     let filename = $uploadData.name;
 
     function handleFileSelect(event) {
         /** @type {HTMLFormElement}*/ //@ts-ignore
         const { form } = event.target;
-        uploadData.set({
-            formData: new FormData(form),
-            name: event.target.files[0].name,
-        });
-        push("/reading-file");
+        uploadFile(new FormData(form)).then((data) =>
+            replace(`/file-analyzed/${data.id}`)
+        );
     }
 
     function generateQuestions() {
@@ -38,7 +35,6 @@
 </div>
 <form enctype="multipart/form-data" novalidate>
     <input
-        bind:this={fileInput}
         on:change={handleFileSelect}
         class="FileInput"
         name="document"
@@ -47,7 +43,7 @@
         accept=".doc,.docx,.pdf,.txt"
         hidden
     />
-    <Button on:click={() => fileInput.click()}>
+    <Button on:click={openExplorer}>
         <div slot="icon">
             <UploadIcon />
         </div>
