@@ -1,8 +1,9 @@
 <script>
-    import { replace } from "svelte-spa-router";
+    import { pop, replace } from "svelte-spa-router";
     import { Button, UploadIcon } from "@/lib/ui";
-    import { uploadFile } from "@/utils";
+    import { notify } from "@/utils";
     import { uploadData } from "@/stores";
+    import { uploadFile } from "@/services";
 
     /** @type {HTMLInputElement}*/
     let fileInput;
@@ -12,9 +13,13 @@
     const handleFileSelect = (event) => {
         /** @type {HTMLFormElement}*/ //@ts-ignore
         const { form } = event.target;
-        uploadFile(new FormData(form)).then((data) => {
-            replace(`/file-analyzed/${data.id}`);
-        });
+        uploadFile(new FormData(form))
+            .then((data) => {
+                replace(`/file-analyzed/${data.id}`);
+            })
+            .catch((error) =>
+                notify(error && error.message, "error").then(() => pop())
+            );
     };
 
     const openExplorer = () => {

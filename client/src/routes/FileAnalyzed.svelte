@@ -2,7 +2,8 @@
     import { push, params, replace } from "svelte-spa-router";
     import { Button, UploadIcon } from "@/lib/ui";
     import { uploadData } from "@/stores";
-    import { openExplorer, uploadFile } from "@/utils";
+    import { openExplorer } from "@/utils";
+    import { uploadFile } from "@/services";
 
     let filename = $uploadData.name;
 

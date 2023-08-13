@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { Button } from "@/lib/ui";
     import { overlayIsFocused, uploadData } from "@/stores";
-    import { cancelCurrentUpload } from "@/utils";
+    import { cancelCurrentUpload } from "@/services";
 
     const filename = $uploadData.name;
 

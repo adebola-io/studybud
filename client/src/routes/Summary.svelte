@@ -2,12 +2,14 @@
     import CopyIcon from "@/assets/svg/copy-icon.svg";
     import ExportIcon from "@/assets/svg/download-icon.svg";
     import { Button, Loader, UploadIcon } from "@/lib/ui";
+    import { getSummary, uploadFile } from "@/services";
     import { uploadData } from "@/stores";
-    import { getSummary, notify, openExplorer, uploadFile } from "@/utils";
+    import { notify, openExplorer } from "@/utils";
     import { onMount } from "svelte";
     import { pop, replace, params } from "svelte-spa-router";
 
-    let summary = { text: "" };
+    /** @type {SummarizerResponseData}*/
+    let summary = { document: 0, summarized_text: "" };
     let isLoading = true;
     let isError = false;
 
@@ -36,7 +38,7 @@
     }
 
     function copySummary() {
-        navigator.clipboard.writeText(summary.text);
+        navigator.clipboard.writeText(summary.summarized_text);
         notify("Summary copied", "success", 800);
     }
 
@@ -86,7 +88,7 @@
             </div>
         {:else}
             <div class="ContentInner">
-                {summary.text}
+                {summary.summarized_text}
             </div>
         {/if}
     </div>
@@ -170,9 +172,9 @@
         width: 65%;
         height: calc(100% - 100px);
         color: #fff;
-        text-align: start;
+        text-align: justify;
         font-family: Alata;
-        font-size: 1rem;
+        font-size: 15pt;
         font-weight: 400;
         overflow-y: scroll;
         .ContentInner {
