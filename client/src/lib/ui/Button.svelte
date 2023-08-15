@@ -7,6 +7,9 @@
 
     const dispatch = createEventDispatcher();
 
+    /** Whether or not to disable default styles. */
+    export let override = false;
+
     /** @type {"button" | "submit" | "reset"} */
     export let type = "button";
 
@@ -22,6 +25,8 @@
     /** @type {"normal" | "small" | "big"} */
     export let layout = "normal";
 
+    export let disabled = false;
+
     /**
      * Foward button click events.
      * @param {MouseEvent} event
@@ -34,10 +39,11 @@
 </script>
 
 <button
-    {style}
-    on:click={handleClick}
+    {disabled}
     {type}
-    class={`${_class} ${variant} ${layout}`}
+    {style}
+    class={`${override ? "" : `Default ${variant} ${layout}`} ${_class}`}
+    on:click={disabled ? undefined : handleClick}
 >
     <div class="icon">
         <slot name="icon" />
@@ -48,7 +54,7 @@
 </button>
 
 <style lang="scss">
-    button {
+    .Default {
         position: relative;
         display: flex;
         justify-content: center;
@@ -56,6 +62,9 @@
         border: none;
         cursor: pointer;
         transition-duration: var(--TransitionSpeed-Fast);
+        &:disabled {
+            opacity: 0.4;
+        }
         &.normal {
             width: 291.294px;
             aspect-ratio: 4.175419987386;
@@ -93,7 +102,7 @@
             font-weight: 700;
             line-height: normal;
         }
-        &:hover {
+        &:hover:not(:disabled) {
             background-color: var(--picton-blue);
             box-shadow: none;
             transform: scale(0.95);

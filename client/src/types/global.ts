@@ -12,6 +12,29 @@ declare global {
         summarized_text: string;
     }
 
+    interface Question {
+        id: number;
+        document: number;
+        question: string;
+        options: string[];
+        correct_answer: number;
+    }
+
+    interface Answer {
+        expected: number;
+        value: number;
+    }
+
+    interface QuestionAnswerResult {
+        question: number;
+        wrong_answer: string;
+    }
+
+    interface FeedbackResponse {
+        question: number;
+        feedback_text: string;
+    }
+
     type Writable<T> = import("svelte/store").Writable<T>;
 
     type InputChangeHandler =

@@ -106,3 +106,21 @@ body {
     border: 2px solid var(--bice-blue, #386fa4);
     color: var(--text, #dedede);
 }
+
+.Letter {
+    color: var(--text, #dedede);
+    font-family: Alata;
+    font-size: 2.27613rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.Content {
+    display: inline-flex;
+    color: var(--text, #dedede);
+    font-family: Alata;
+    font-size: 1.13806rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

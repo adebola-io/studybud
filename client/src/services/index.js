@@ -26,6 +26,50 @@ export async function uploadFile(formData) {
         signal: uploadController.signal,
     });
     return response.data;
+
+    // return await deferred({ id: 1, detail: "Analyzed", name });
+}
+
+/**
+ * Generates questions for document based on id.
+ * @param {string} id
+ * @returns {Promise<Question[]>}
+ */
+export async function generateQuestions(id) {
+    const response = await axios.get(
+        `${endpoint}/questions/${id}/generate_question/`
+    );
+    const { data } = response;
+    return data;
+
+    // /**@type {Question[]} */
+    // const fakeResult = [
+    //     {
+    //         question: "What is 2+ 2?",
+    //         correct_answer: 1,
+    //         document: 1,
+    //         id: 1,
+    //         options: ["A. 3", "B. 4", "C. 5", "D. 6"],
+    //     },
+    //     {
+    //         question: "What is the answer to everything?",
+    //         correct_answer: 2,
+    //         document: 1,
+    //         id: 2,
+    //         options: ["A. 89", "B. 23", "C. 42", "D. 45"],
+    //     },
+    // ];
+    // return await deferred(fakeResult);
+}
+
+/**
+ * @template T
+ * Creates a delay before returning a value.
+ * @param {T} input
+ */
+async function deferred(input, delay = 3000) {
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    return input;
 }
 
 /**
@@ -47,6 +91,18 @@ export async function getSummary(id) {
     const response = await axios.get(
         `${endpoint}/summaries/${id}/generate_summary`
     );
+    const { data } = response;
+    return data;
+}
+
+/**
+ * Retrieved feedback for quiz.
+ * @param {QuestionAnswerResult} result
+ * @return {Promise<FeedbackResponse>}
+ */
+export async function getQuestionAnswerFeedback(result) {
+    const response = await axios.post(`${endpoint}/generate_feedback/`, result);
+
     const { data } = response;
     return data;
 }

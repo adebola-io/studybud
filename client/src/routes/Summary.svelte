@@ -115,15 +115,6 @@
 </div>
 
 <style lang="scss">
-    .Heading {
-        color: var(--pale-azure, #84d2f6);
-        text-align: center;
-        font-family: Alata;
-        font-size: 2.68125rem;
-        margin-bottom: 0;
-        font-weight: 400;
-        line-height: 4rem; /* 149.184% */
-    }
     .Box {
         position: relative;
         display: flex;
